@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: web
+    build: ./code
+    restart: always
+    expose:
+      - 5000
+    networks:
+      - flask_network
+    environment:
+      - DEBUG=0
+      - MYSQL_HOST=database
+      - MYSQL_DATABASE=market
+      - MYSQL_USER=market_user
+      - MYSQL_PASSWORD=market_password
+    volumes:
+      - ./code/project:/code:ro
+    depends_on:
+      - database
+  proxy:
+    container_name: nginx
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - flask_network
+    depends_on:
+      - web
+  database:
+    container_name: db
+    image: mariadb:latest
+    restart: always
+    expose:
+      - 3306
+    networks:
+      - flask_network
+    environment:
+      - MYSQL_DATABASE=market
+      - MYSQL_USER=market_user
+      - MYSQL_PASSWORD=market_password
+      - MYSQL_ROOT_PASSWORD=root_password
+    volumes:
+      - ./dbdata:/var/lib/mysql:bind
+    
+networks:
+  flask_network:

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register Page
+{% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-center m-2 mt-5">
+    <div class="col-md-6 border border-white rounded p-5">
+        <form method="post" action="">
+            <fieldset>
+                <legend><strong>Register Form</strong></legend><br><br>
+
+                {{ form.hidden_tag() }}
+
+                {{ form.username.label(class="form-label") }}<br>
+                {{ form.username(class="form-control",placeholder="User Name") }}<br>
+
+                {{ form.email.label(class="form-label") }}<br>
+                {{ form.email(class="form-control",placeholder="Email Address") }}<br>
+
+                {{ form.password1.label(class="form-label") }}<br>
+                {{ form.password1(class="form-text form-control",placeholder="Password") }}<br>
+
+                {{ form.password2.label(class="form-label") }}<br>
+                {{ form.password2(class="form-text form-control",placeholder="Confirm Password") }}<br>
+
+                {{ form.submit(class="btn btn-primary btn-lg form-control fw-bold") }}<br><br><br>
+
+                <div class="text-center">
+                    <p class="form-text text-white fw-bold">Have an account ? <a href="{{ url_for('login_page') }}" class="link-light"><span class="badge bg-secondary fs-6">Login</span></a></p>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}
